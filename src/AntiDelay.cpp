@@ -3,7 +3,7 @@
  * @author Martin Vichnál
  * @page https://github.com/martinvichnal/AntiDelay
  * @brief AntiDelay is a library that aims to provide non-blocking delay functionality.
- * @version v1.1.3
+ * @version v1.1.2
  * @date 2023-12-31
  *
  * @copyright Copyright (c) 2024
@@ -95,4 +95,15 @@ void AntiDelay::resume()
 bool AntiDelay::isRunning()
 {
   return !isPaused && millis() - previousMillis < timeInterval;
+}
+
+uint32_t AntiDelay::elapsed() const // déjà « const », pas de side-effect
+{
+  return millis() - previousMillis;
+}
+
+uint32_t AntiDelay::remaining() const
+{
+  unsigned long e = elapsed(); // temps écoulé
+  return (timeInterval > e) ? timeInterval - e : 0;
 }
